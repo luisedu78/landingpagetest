@@ -15,8 +15,6 @@
       --olive2: #6B8E23;   /* olive médio */
       --bordo1: #800020;   /* bordô principal */
       --bordo2: #9a1b2a;   /* bordô claro */
-      --accent1: #6B8E23;  /* para CTA secundário */
-      --accent2: #9a1b2a;  /* para CTA primário */
       --card: #12131c;
       --card2: #171824;
       --shadow: 0 10px 30px rgba(0,0,0,.25);
@@ -39,7 +37,7 @@
 
     /* Header */
     header{
-      position:sticky; top:0; z-index:50; backdrop-filter:saturate(130%) blur(10px);
+      position:sticky; top:0; z-index:60; backdrop-filter:saturate(130%) blur(10px);
       background:linear-gradient(90deg, rgba(11,12,15,.88), rgba(23,24,36,.88));
       border-bottom:1px solid rgba(255,255,255,.08);
     }
@@ -52,6 +50,18 @@
     }
     .brand h1{font-size:18px;margin:0;font-weight:800;letter-spacing:.3px}
     .nav a.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(90deg, var(--olive2), #7aa52a);font-weight:800;box-shadow:var(--shadow)}
+
+    /* Hamburger */
+    .hamburger{display:none; width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);cursor:pointer;align-items:center;justify-content:center}
+    .hamburger span{display:block;width:20px;height:2px;background:#fff;position:relative}
+    .hamburger span::before,.hamburger span::after{content:"";position:absolute;left:0;width:20px;height:2px;background:#fff;}
+    .hamburger span::before{top:-6px}
+    .hamburger span::after{top:6px}
+
+    .mobile-menu{position:fixed;inset:64px 0 auto 0;background:linear-gradient(180deg,#0e1018,#0b0c0f);border-top:1px solid rgba(255,255,255,.08);display:none;z-index:59}
+    .mobile-menu.open{display:block}
+    .mobile-menu .list{display:flex;flex-direction:column;gap:12px;padding:16px}
+    .mobile-menu a{padding:14px 12px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
 
     /* Hero */
     .hero{padding:72px 0 36px}
@@ -140,7 +150,7 @@
     .timer{font-weight:900; letter-spacing:.4px}
 
     /* Cart Drawer */
-    .drawer{position:fixed; top:0; right:-420px; width:380px; max-width:92vw; height:100dvh; background:#0c0f1b; box-shadow: -8px 0 28px rgba(0,0,0,.45); transition:right .25s ease; z-index:60; border-left:1px solid rgba(255,255,255,.08)}
+    .drawer{position:fixed; top:0; right:-420px; width:380px; max-width:92vw; height:100dvh; background:#0c0f1b; box-shadow: -8px 0 28px rgba(0,0,0,.45); transition:right .25s ease; z-index:58; border-left:1px solid rgba(255,255,255,.08)}
     .drawer.open{right:0}
     .drawer header{position:sticky; top:0; background:transparent; border-bottom:1px solid rgba(255,255,255,.08)}
     .drawer .body{padding:16px; display:flex; flex-direction:column; gap:12px; height:calc(100dvh - 140px); overflow:auto}
@@ -157,6 +167,15 @@
     }
     .wa:hover{transform:translateY(-2px)}
 
+    /* Cookie Banner */
+    .cookie{
+      position:fixed; inset:auto 16px 16px 16px; z-index:57; display:none;
+      background:linear-gradient(180deg,#11131e,#0b0d15); border:1px solid rgba(255,255,255,.12);
+      border-radius:14px; padding:16px; box-shadow:var(--shadow);
+    }
+    .cookie.show{display:block}
+    .cookie .actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+
     /* Footer */
     footer{padding:30px 0;color:var(--muted);font-size:13px}
 
@@ -166,6 +185,8 @@
       .grid{grid-template-columns:1fr 1fr}
       .pricing{grid-template-columns:1fr}
       .testi{grid-template-columns:1fr}
+      .nav .cta{display:none}
+      .hamburger{display:flex}
     }
     @media (max-width: 600px){
       .headline{font-size:36px}
@@ -177,13 +198,23 @@
   <header>
     <div class="container nav">
       <div class="brand">
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-controls="menuMobile" aria-expanded="false"><span></span></button>
         <div class="logo" aria-hidden="true"></div>
         <h1>Collection Premier</h1>
       </div>
-      <nav class="cta">
+      <nav class="cta" aria-label="Menu principal">
         <a href="#produtos" class="btn btn-accent">Coleção</a>
         <a href="#pacotes" class="btn btn-primary">Pacotes Exclusivos</a>
       </nav>
+    </div>
+    <div class="mobile-menu" id="menuMobile" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="list container">
+        <a href="#produtos" onclick="closeMobile()">Coleção</a>
+        <a href="#pacotes" onclick="closeMobile()">Pacotes Exclusivos</a>
+        <a href="#depoimentos" onclick="closeMobile()">Depoimentos</a>
+        <a href="#faq" onclick="closeMobile()">FAQ</a>
+        <a href="#" onclick="openCart(); closeMobile()">Carrinho</a>
+      </div>
     </div>
   </header>
 
@@ -361,8 +392,19 @@
 
   <!-- WhatsApp Floating -->
   <a class="wa" id="waFloat" href="#" aria-label="Fale no WhatsApp">
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M19.11 17.35c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.12-.41-2.13-1.31-.79-.7-1.32-1.56-1.48-1.83-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.46h-.52c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.3s.98 2.66 1.11 2.84c.14.18 1.93 2.94 4.67 4.12.65.28 1.16.45 1.56.58.65.21 1.24.18 1.7.11.52-.08 1.6-.65 1.82-1.27.22-.63.22-1.17.16-1.28-.05-.11-.23-.18-.5-.32z"/><path d="M26.6 5.4C23.9 2.7 20.2 1.2 16.3 1.2 8.7 1.2 2.6 7.3 2.6 14.9c0 2.4.6 4.7 1.7 6.8L2 31.2l9.7-2.6c2 1.1 4.3 1.6 6.6 1.6 7.6 0 13.7-6.1 13.7-13.7 0-3.6-1.4-7-4.3-10.1zM16.3 27.7c-2.1 0-4.1-.5-5.9-1.5l-.4-.2-5.8 1.6 1.6-5.6-.2-.4c-1.1-1.9-1.6-4.1-1.6-6.3 0-6.9 5.6-12.5 12.5-12.5 3.3 0 6.5 1.3 8.9 3.7 2.4 2.4 3.7 5.5 3.7 8.8-.2 6.8-5.8 12.4-12.7 12.4z"/></svg>
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M19.11 17.35c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.12-.41-2.13-1.31-.79-.7-1.32-1.56-1.48-1.83-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.46h-.52c-.18 0-.48.07-.73 a34-.25.27-.96.94-.96 2.3s.98 2.66 1.11 2.84c.14.18 1.93 2.94 4.67 4.12.65.28 1.16.45 1.56.58.65.21 1.24.18 1.7.11.52-.08 1.6-.65 1.82-1.27.22-.63.22-1.17.16-1.28-.05-.11-.23-.18-.5-.32z"/><path d="M26.6 5.4C23.9 2.7 20.2 1.2 16.3 1.2 8.7 1.2 2.6 7.3 2.6 14.9c0 2.4.6 4.7 1.7 6.8L2 31.2l9.7-2.6c2 1.1 4.3 1.6 6.6 1.6 7.6 0 13.7-6.1 13.7-13.7 0-3.6-1.4-7-4.3-10.1z"/></svg>
   </a>
+
+  <!-- Cookie Consent -->
+  <div class="cookie" id="cookieBanner" role="dialog" aria-modal="true" aria-live="polite">
+    <div style="font-weight:800;margin-bottom:6px">Nós usamos cookies</div>
+    <div class="small">Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Você pode aceitar para continuar com a melhor experiência ou recusar — se recusar, perguntaremos novamente na próxima visita.</div>
+    <div class="actions">
+      <button class="btn btn-accent" id="acceptCookies">Aceitar cookies</button>
+      <button class="btn ghost" id="declineCookies">Recusar</button>
+      <a class="small" href="#faq">Saiba mais</a>
+    </div>
+  </div>
 
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
@@ -395,6 +437,29 @@
 
     const fmt = (n)=> n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 
+    // ====== HAMBURGER ======
+    const hamburger = document.getElementById('hamburger');
+    const menuMobile = document.getElementById('menuMobile');
+
+    function closeMobile(){
+      menuMobile.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+    }
+    function toggleMobile(){
+      const open = menuMobile.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(open));
+    }
+    hamburger.addEventListener('click', toggleMobile);
+
+    // Fecha ao tocar fora
+    document.addEventListener('click', (e)=>{
+      if(menuMobile.classList.contains('open')){
+        const inside = menuMobile.contains(e.target) || hamburger.contains(e.target);
+        if(!inside) closeMobile();
+      }
+    });
+
+    // ====== PRODUTOS ======
     function renderProducts(){
       const grid = document.getElementById('grid');
       grid.innerHTML = '';
@@ -402,25 +467,25 @@
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
-          <div class="img">
-            <div class="badge">${p.badge || 'Oferta'}</div>
+          <div class=\"img\">
+            <div class=\"badge\">${p.badge || 'Oferta'}</div>
             <span>${p.title}</span>
           </div>
-          <div class="content">
-            <h4 class="title">${p.title}</h4>
-            <p class="desc">${p.desc}</p>
-            <div class="price">
-              ${p.old ? `<span class="old">${fmt(p.old)}</span>`:''}
-              <span class="new">${fmt(p.price)}</span>
+          <div class=\"content\">
+            <h4 class=\"title\">${p.title}</h4>
+            <p class=\"desc\">${p.desc}</p>
+            <div class=\"price\">
+              ${p.old ? `<span class=\"old\">${fmt(p.old)}</span>`:''}
+              <span class=\"new\">${fmt(p.price)}</span>
             </div>
-            <div class="actions">
-              <div class="qty">
-                <button aria-label="diminuir" onclick="stepQty('${p.id}',-1)">−</button>
-                <span id="q-${p.id}">1</span>
-                <button aria-label="aumentar" onclick="stepQty('${p.id}',1)">+</button>
+            <div class=\"actions\">
+              <div class=\"qty\">
+                <button aria-label=\"diminuir\" onclick=\"stepQty('${p.id}',-1)\">−</button>
+                <span id=\"q-${p.id}\">1</span>
+                <button aria-label=\"aumentar\" onclick=\"stepQty('${p.id}',1)\">+</button>
               </div>
-              <button class="btn btn-accent" onclick="addToCart('${p.id}')">Adicionar</button>
-              <button class="btn btn-primary" onclick="buyNow('${p.id}')">Comprar agora</button>
+              <button class=\"btn btn-accent\" onclick=\"addToCart('${p.id}')\">Adicionar</button>
+              <button class=\"btn btn-primary\" onclick=\"buyNow('${p.id}')\">Comprar agora</button>
             </div>
           </div>`;
         grid.appendChild(card);
@@ -460,13 +525,13 @@
         const lineTotal = product.price * qty;
         subtotal += lineTotal;
         line.innerHTML = `
-          <div style="max-width:60%">
-            <div style="font-weight:800">${product.title}</div>
-            <div class="mini">${qty} x ${fmt(product.price)}</div>
+          <div style=\"max-width:60%\">
+            <div style=\"font-weight:800\">${product.title}</div>
+            <div class=\"mini\">${qty} x ${fmt(product.price)}</div>
           </div>
           <div>
             <strong>${fmt(lineTotal)}</strong><br>
-            <button class="mini" style="background:none;border:none;color:#a7c07a;cursor:pointer" onclick="removeItem('${id}')">remover</button>
+            <button class=\"mini\" style=\"background:none;border:none;color:#a7c07a;cursor:pointer\" onclick=\"removeItem('${id}')\">remover</button>
           </div>`;
         body.appendChild(line);
       });
@@ -526,6 +591,7 @@
       document.getElementById('p-premium').textContent = fmt(val(plans.Premium.items, plans.Premium.discountRate));
     }
 
+    // Countdown (30 min)
     function startCountdown(minutes=30){
       const end = Date.now() + minutes*60*1000;
       const el1 = document.getElementById('countdown');
@@ -554,11 +620,37 @@
       wa.href = url;
     }
 
+    // ====== COOKIES ======
+    const banner = document.getElementById('cookieBanner');
+    const acceptBtn = document.getElementById('acceptCookies');
+    const declineBtn = document.getElementById('declineCookies');
+
+    function checkCookies(){
+      const choice = localStorage.getItem('cookieChoice');
+      if(choice === 'accepted'){
+        // nunca mostra novamente
+        banner.classList.remove('show');
+      } else {
+        // se rejeitado ou inexistente, mostra sempre
+        banner.classList.add('show');
+      }
+    }
+    acceptBtn.addEventListener('click', ()=>{
+      localStorage.setItem('cookieChoice','accepted');
+      banner.classList.remove('show');
+    });
+    declineBtn.addEventListener('click', ()=>{
+      localStorage.setItem('cookieChoice','rejected');
+      banner.classList.add('show');
+    });
+
+    // Init
     document.getElementById('year').textContent = new Date().getFullYear();
     renderProducts();
     renderPlanPrices();
     startCountdown(30);
     initWhatsApp();
+    checkCookies();
   </script>
 </body>
 </html>
