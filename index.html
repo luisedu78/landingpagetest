@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Collection Premier — Ofertas Exclusivas</title>
+  <meta name="description" content="Landing page premium com vitrine, pacotes, descontos e carrinho integrado. Visual olive & bordô, pronta para conversão." />
+  <style>
+    :root{
+      /* Paleta Olive & Bordô */
+      --bg: #0b0c0f;
+      --text: #eef2f1;
+      --muted: #c7cfcd;
+      --olive1: #556B2F;   /* olive escuro */
+      --olive2: #6B8E23;   /* olive médio */
+      --bordo1: #800020;   /* bordô principal */
+      --bordo2: #9a1b2a;   /* bordô claro */
+      --accent1: #6B8E23;  /* para CTA secundário */
+      --accent2: #9a1b2a;  /* para CTA primário */
+      --card: #12131c;
+      --card2: #171824;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius-xl: 18px;
+      --radius: 12px;
+      --radius-sm: 10px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text); background:
+        radial-gradient(1200px 600px at 80% -20%, rgba(154,27,42,.25), transparent 60%),
+        radial-gradient(1000px 600px at -10% 10%, rgba(107,142,35,.22), transparent 60%),
+        linear-gradient(180deg, #0b0c0f 0%, #0b0c0f 100%);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(130%) blur(10px);
+      background:linear-gradient(90deg, rgba(11,12,15,.88), rgba(23,24,36,.88));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg, var(--bordo1), var(--olive2));
+      box-shadow:0 6px 16px rgba(154,27,42,.35);
+    }
+    .brand h1{font-size:18px;margin:0;font-weight:800;letter-spacing:.3px}
+    .nav a.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(90deg, var(--olive2), #7aa52a);font-weight:800;box-shadow:var(--shadow)}
+
+    /* Hero */
+    .hero{padding:72px 0 36px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+    .headline{
+      font-size:44px;line-height:1.1;margin:0 0 14px;font-weight:900;
+      background:linear-gradient(90deg, #ffffff, #f1e7ea 45%, #e7efd9 85%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      letter-spacing:.2px
+    }
+    .sub{color:var(--muted);font-size:18px;margin:0 0 22px}
+    .pills{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+    .pill{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:13px}
+    .cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .btn{
+      padding:14px 20px;border:none;border-radius:14px;cursor:pointer;font-weight:900;letter-spacing:.3px;
+      transition:transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(90deg, var(--bordo1), var(--bordo2));color:#fff;box-shadow:0 10px 25px rgba(154,27,42,.25)}
+    .btn-accent{background:linear-gradient(90deg, var(--olive2), #7aa52a);color:#0d1a0d}
+    .ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff}
+    .trust{display:flex;gap:18px;align-items:center;margin-top:12px;color:var(--muted);font-size:13px}
+    .hero-card{
+      background:linear-gradient(180deg, var(--card), var(--card2));border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius-xl); padding:18px; box-shadow:var(--shadow);
+    }
+    .hero-img{height:280px;border-radius:16px;background:radial-gradient(600px 200px at 50% 0%, rgba(154,27,42,.32), transparent 60%),
+      linear-gradient(180deg, #11121e, #0b0c0f);
+      display:flex;align-items:center;justify-content:center; position:relative; overflow:hidden}
+    .spark{position:absolute;inset:auto; width:160px;height:160px; border-radius:50%;
+      background:radial-gradient(circle, rgba(107,142,35,.35), transparent 60%); filter:blur(16px)}
+
+    /* Sections */
+    section{padding:44px 0}
+    .section-title{font-size:26px;margin:0 0 8px}
+    .section-sub{color:var(--muted);margin:0 0 20px}
+
+    /* Product grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)
+    }
+    .badge{position:absolute;top:12px;left:12px;background:linear-gradient(90deg, var(--olive2), var(--bordo2));color:#0e1109;font-weight:900;font-size:12px;padding:6px 10px;border-radius:999px}
+    .img{height:170px;background:linear-gradient(120deg, rgba(154,27,42,.18), rgba(107,142,35,.16)); display:flex; align-items:center;justify-content:center; position:relative}
+    .img span{opacity:.7}
+    .content{padding:14px}
+    .title{font-weight:900;margin:0 0 6px;font-size:16px}
+    .desc{color:var(--muted);font-size:14px;min-height:36px}
+    .price{display:flex;gap:10px;align-items:baseline;margin-top:8px}
+    .price .old{color:#9aa4b3;text-decoration:line-through;font-size:13px}
+    .price .new{font-weight:900;font-size:18px}
+    .actions{display:flex;gap:10px;margin-top:12px}
+    .qty{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:6px 10px}
+    .qty button{background:transparent;border:none;color:var(--text);font-size:18px;cursor:pointer}
+    .small{font-size:12px;color:var(--muted)}
+
+    /* Pricing (Pacotes) */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .plan{padding:22px;border-radius:18px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg, #121421, #0d0f19)}
+    .plan.pop{border-color:rgba(107,142,35,.5); box-shadow:0 10px 28px rgba(107,142,35,.22)}
+    .plan h3{margin:.2rem 0}
+    .plan .value{font-size:34px;font-weight:900;margin:6px 0}
+    .plan ul{list-style:none;padding:0;margin:12px 0;line-height:1.8;color:var(--muted)}
+
+    /* Testimonials */
+    .testi{display:grid;grid-template-columns:repeat(3,1fr); gap:18px}
+    .quote{padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg, #10121f, #0e101a)}
+    .quote p{margin:0;color:#dde3df}
+    .quote .who{margin-top:10px;color:var(--muted);font-size:13px}
+
+    /* FAQ */
+    .faq{max-width:900px;margin:0 auto}
+    details{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); padding:14px 16px; border-radius:12px}
+    details+details{margin-top:10px}
+    summary{cursor:pointer;font-weight:800}
+
+    /* Sticky CTA */
+    .sticky{
+      position:sticky; bottom:0; z-index:40; backdrop-filter:blur(8px) saturate(140%);
+      background:linear-gradient(90deg, rgba(11,12,15,.93), rgba(23,24,36,.93));
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .sticky .wrap{display:flex;gap:14px;justify-content:space-between;align-items:center;padding:10px 0}
+    .timer{font-weight:900; letter-spacing:.4px}
+
+    /* Cart Drawer */
+    .drawer{position:fixed; top:0; right:-420px; width:380px; max-width:92vw; height:100dvh; background:#0c0f1b; box-shadow: -8px 0 28px rgba(0,0,0,.45); transition:right .25s ease; z-index:60; border-left:1px solid rgba(255,255,255,.08)}
+    .drawer.open{right:0}
+    .drawer header{position:sticky; top:0; background:transparent; border-bottom:1px solid rgba(255,255,255,.08)}
+    .drawer .body{padding:16px; display:flex; flex-direction:column; gap:12px; height:calc(100dvh - 140px); overflow:auto}
+    .drawer .foot{position:sticky; bottom:0; padding:16px; backdrop-filter:blur(8px); border-top:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(16,18,31,.65), rgba(14,16,26,.65))}
+    .row{display:flex;justify-content:space-between;align-items:center}
+    .mini{font-size:12px;color:var(--muted)}
+    .coupon{display:flex;gap:8px;margin-top:8px}
+    .coupon input{flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.04); color:var(--text)}
+
+    /* Floating WhatsApp */
+    .wa{
+      position:fixed; right:16px; bottom:16px; z-index:45; width:54px; height:54px; border-radius:50%;
+      display:grid; place-items:center; color:#07150b; background:linear-gradient(145deg, #6B8E23, #7aa52a); box-shadow:0 12px 26px rgba(107,142,35,.35)
+    }
+    .wa:hover{transform:translateY(-2px)}
+
+    /* Footer */
+    footer{padding:30px 0;color:var(--muted);font-size:13px}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr 1fr}
+      .pricing{grid-template-columns:1fr}
+      .testi{grid-template-columns:1fr}
+    }
+    @media (max-width: 600px){
+      .headline{font-size:36px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Collection Premier</h1>
+      </div>
+      <nav class="cta">
+        <a href="#produtos" class="btn btn-accent">Coleção</a>
+        <a href="#pacotes" class="btn btn-primary">Pacotes Exclusivos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h2 class="headline">Eleve seu padrão ao extraordinário.</h2>
+          <p class="sub">Curadoria impecável, acabamentos superiores e uma experiência de compra sem atrito. Descontos elegantes — o suficiente para dizer “agora é o momento”.</p>
+          <div class="pills">
+            <span class="pill">Seleção limitada</span>
+            <span class="pill">Garantia 7 dias</span>
+            <span class="pill">Envio expresso</span>
+          </div>
+          <div class="cta">
+            <a href="#produtos" class="btn btn-primary">Comprar agora</a>
+            <a href="#depoimentos" class="btn ghost">Ver avaliações</a>
+          </div>
+          <div class="trust">
+            <span>★★★★★ 4.9/5 por 1.200+ clientes</span>
+            <span>•</span>
+            <span>Checkout seguro</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-img">
+            <div class="spark" style="left:15%;bottom:10%"></div>
+            <div class="spark" style="right:12%;top:6%"></div>
+            <svg width="220" height="120" viewBox="0 0 220 120" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#800020"/>
+                  <stop offset="100%" stop-color="#6B8E23"/>
+                </linearGradient>
+              </defs>
+              <rect x="10" y="10" rx="14" ry="14" width="200" height="100" fill="url(#g1)"/>
+              <circle cx="50" cy="60" r="14" fill="rgba(255,255,255,.85)"/>
+              <rect x="80" y="48" rx="6" width="90" height="12" fill="rgba(255,255,255,.9)"/>
+              <rect x="80" y="68" rx="6" width="60" height="12" fill="rgba(255,255,255,.6)"/>
+            </svg>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:12px">
+            <div>
+              <div style="font-weight:900">Oferta Privée</div>
+              <div class="small">Termina em <span id="countdown">--:--:--</span></div>
+            </div>
+            <button class="btn btn-accent" onclick="document.querySelector('#produtos').scrollIntoView({behavior:'smooth'})">Ver coleção</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUTOS -->
+    <section id="produtos">
+      <div class="container">
+        <h3 class="section-title">Peças em destaque</h3>
+        <p class="section-sub">Descontos discretos, acabamento impecável e valor real na hora de fechar.</p>
+        <div class="grid" id="grid"></div>
+        <p class="small" style="margin-top:12px">* Preços em BRL. Descontos por tempo limitado.</p>
+      </div>
+    </section>
+
+    <!-- PACOTES / PLANOS -->
+    <section id="pacotes">
+      <div class="container">
+        <h3 class="section-title">Pacotes Exclusivos</h3>
+        <p class="section-sub">Escolhas inteligentes para maximizar custo‑benefício sem abrir mão do luxo.</p>
+        <div class="pricing">
+          <div class="plan">
+            <div class="pill">Essencial</div>
+            <h3>Entrada Perfeita</h3>
+            <div class="value" id="p-essencial">R$ 0,00</div>
+            <ul>
+              <li>2 itens à sua escolha</li>
+              <li>Atendimento via WhatsApp</li>
+              <li>Envio em até 48h</li>
+            </ul>
+            <button class="btn btn-primary" onclick="selectPlan('Essencial')">Escolher Essencial</button>
+          </div>
+          <div class="plan pop">
+            <div class="pill" style="background:linear-gradient(90deg, var(--olive2), #7aa52a); color:#0f1a0c">Mais Desejado</div>
+            <h3>Profissional</h3>
+            <div class="value" id="p-profissional">R$ 0,00</div>
+            <ul>
+              <li>4 itens + 1 brinde</li>
+              <li>Desconto progressivo</li>
+              <li>Suporte prioritário</li>
+            </ul>
+            <button class="btn btn-accent" onclick="selectPlan('Profissional')">Escolher Profissional</button>
+          </div>
+          <div class="plan">
+            <div class="pill" style="background:linear-gradient(90deg, var(--bordo1), var(--bordo2))">Signature</div>
+            <h3>Premium</h3>
+            <div class="value" id="p-premium">R$ 0,00</div>
+            <ul>
+              <li>6 itens + 2 brindes</li>
+              <li>Garantia estendida</li>
+              <li>Consultoria personalizada</li>
+            </ul>
+            <button class="btn btn-primary" onclick="selectPlan('Premium')">Escolher Premium</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPOIMENTOS -->
+    <section id="depoimentos">
+      <div class="container">
+        <h3 class="section-title">Quem experimenta, recomenda</h3>
+        <p class="section-sub">A melhor propaganda é a satisfação.</p>
+        <div class="testi">
+          <div class="quote"><p>“Atendimento impecável e entrega ágil. Experiência premium do início ao fim.”</p><div class="who">— Ana M.</div></div>
+          <div class="quote"><p>“Os pacotes fazem sentido e o acabamento surpreende. Vale cada centavo.”</p><div class="who">— João P.</div></div>
+          <div class="quote"><p>“Design elegante, preço justo e suporte de verdade. Voltarei a comprar.”</p><div class="who">— Carla S.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container faq">
+        <h3 class="section-title">Dúvidas frequentes</h3>
+        <details open>
+          <summary>Como funcionam os descontos?</summary>
+          <p class="small">Cada produto pode ter um desconto sutil já aplicado. Além disso, cupons ocasionais (ex.: <b>BEMVINDO5</b>) podem conceder 5% OFF adicional no carrinho.</p>
+        </details>
+        <details>
+          <summary>Quais são as formas de pagamento?</summary>
+          <p class="small">Pix, cartão e fechamento via WhatsApp com link de pagamento.</p>
+        </details>
+        <details>
+          <summary>Posso trocar ou devolver?</summary>
+          <p class="small">Sim. Você tem 7 dias após o recebimento para solicitar devolução.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sticky CTA -->
+  <div class="sticky">
+    <div class="container wrap">
+      <div>
+        <strong>Oferta ativa</strong>
+        <div class="mini">Frete expresso | Cupom <b>BEMVINDO5</b> hoje</div>
+      </div>
+      <div class="timer" id="timer">00:00:00</div>
+      <div class="cta">
+        <button class="btn btn-accent" onclick="openCart()">Ver carrinho</button>
+        <a href="#produtos" class="btn btn-primary">Comprar agora</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drawer Carrinho -->
+  <aside class="drawer" id="drawer">
+    <header class="container" style="padding:14px 16px">
+      <div class="row">
+        <strong>Seu carrinho</strong>
+        <button class="btn ghost" onclick="closeCart()">Fechar</button>
+      </div>
+    </header>
+    <div class="body" id="cartBody"></div>
+    <div class="foot">
+      <div class="row mini"><span>Subtotal</span><span id="subtotal">R$ 0,00</span></div>
+      <div class="row mini"><span>Desconto</span><span id="discount">- R$ 0,00</span></div>
+      <div class="row" style="margin:8px 0 10px 0"><strong>Total</strong><strong id="total">R$ 0,00</strong></div>
+      <div class="coupon">
+        <input id="coupon" placeholder="Cupom (ex.: BEMVINDO5)" />
+        <button class="btn btn-accent" onclick="applyCoupon()">Aplicar</button>
+      </div>
+      <button class="btn btn-primary" style="width:100%;margin-top:10px" onclick="checkoutWhatsApp()">Finalizar pelo WhatsApp</button>
+    </div>
+  </aside>
+
+  <!-- WhatsApp Floating -->
+  <a class="wa" id="waFloat" href="#" aria-label="Fale no WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M19.11 17.35c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.12-.41-2.13-1.31-.79-.7-1.32-1.56-1.48-1.83-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.46h-.52c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.3s.98 2.66 1.11 2.84c.14.18 1.93 2.94 4.67 4.12.65.28 1.16.45 1.56.58.65.21 1.24.18 1.7.11.52-.08 1.6-.65 1.82-1.27.22-.63.22-1.17.16-1.28-.05-.11-.23-.18-.5-.32z"/><path d="M26.6 5.4C23.9 2.7 20.2 1.2 16.3 1.2 8.7 1.2 2.6 7.3 2.6 14.9c0 2.4.6 4.7 1.7 6.8L2 31.2l9.7-2.6c2 1.1 4.3 1.6 6.6 1.6 7.6 0 13.7-6.1 13.7-13.7 0-3.6-1.4-7-4.3-10.1zM16.3 27.7c-2.1 0-4.1-.5-5.9-1.5l-.4-.2-5.8 1.6 1.6-5.6-.2-.4c-1.1-1.9-1.6-4.1-1.6-6.3 0-6.9 5.6-12.5 12.5-12.5 3.3 0 6.5 1.3 8.9 3.7 2.4 2.4 3.7 5.5 3.7 8.8-.2 6.8-5.8 12.4-12.7 12.4z"/></svg>
+  </a>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>© <span id="year"></span> Collection Premier. Todos os direitos reservados.</div>
+      <div><a href="#faq">Políticas & FAQ</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // ====== CONFIG ======
+    const WHATSAPP_NUMBER = '5541998022655';
+
+    const products = [
+      { id: 'p1', title: 'Headphone Studio X', desc: 'Áudio imersivo, construção superior e conforto absoluto.', price: 399.90, old: 449.90, badge:'-11%' },
+      { id: 'p2', title: 'Teclado Mecânico Pro', desc: 'Toque preciso, switches premium e iluminação elegante.', price: 329.90, old: 359.90, badge:'-8%' },
+      { id: 'p3', title: 'Mouse Gamer Flux', desc: 'Performance estável e pegada ergonômica refinada.', price: 149.90, old: 169.90, badge:'-12%' },
+      { id: 'p4', title: 'Webcam FullHD Prime', desc: 'Chamadas nítidas com estética minimalista.', price: 219.90, old: 249.90, badge:'-12%' },
+      { id: 'p5', title: 'Ring Light 12"', desc: 'Luz uniforme para vídeos e conteúdo profissional.', price: 119.90, old: 139.90, badge:'-14%' },
+      { id: 'p6', title: 'Microfone Condenser Vx', desc: 'Captação cristalina para voz e instrumentos.', price: 279.90, old: 309.90, badge:'-10%' }
+    ];
+
+    const plans = {
+      Essencial: { items: 2, discountRate: 0.03 },
+      Profissional: { items: 4, discountRate: 0.05 },
+      Premium: { items: 6, discountRate: 0.07 }
+    };
+
+    const cart = new Map();
+    let couponApplied = null;
+
+    const fmt = (n)=> n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+    function renderProducts(){
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      products.forEach(p=>{
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="img">
+            <div class="badge">${p.badge || 'Oferta'}</div>
+            <span>${p.title}</span>
+          </div>
+          <div class="content">
+            <h4 class="title">${p.title}</h4>
+            <p class="desc">${p.desc}</p>
+            <div class="price">
+              ${p.old ? `<span class="old">${fmt(p.old)}</span>`:''}
+              <span class="new">${fmt(p.price)}</span>
+            </div>
+            <div class="actions">
+              <div class="qty">
+                <button aria-label="diminuir" onclick="stepQty('${p.id}',-1)">−</button>
+                <span id="q-${p.id}">1</span>
+                <button aria-label="aumentar" onclick="stepQty('${p.id}',1)">+</button>
+              </div>
+              <button class="btn btn-accent" onclick="addToCart('${p.id}')">Adicionar</button>
+              <button class="btn btn-primary" onclick="buyNow('${p.id}')">Comprar agora</button>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    const qtyState = {};
+    function stepQty(id, d){
+      const v = Math.max(1, (qtyState[id]||1)+d);
+      qtyState[id]=v; document.getElementById('q-'+id).textContent = v;
+    }
+
+    function addToCart(id){
+      const p = products.find(x=>x.id===id);
+      const q = qtyState[id]||1;
+      const current = cart.get(id) || { qty:0, product:p };
+      current.qty += q; cart.set(id, current);
+      qtyState[id]=1; document.getElementById('q-'+id').textContent = 1;
+      openCart(); renderCart();
+    }
+
+    function buyNow(id){
+      addToCart(id);
+      checkoutWhatsApp();
+    }
+
+    function renderCart(){
+      const body = document.getElementById('cartBody');
+      body.innerHTML = '';
+      if(cart.size===0){
+        body.innerHTML = '<p class="small">Seu carrinho está vazio. Adicione produtos para continuar.</p>';
+      }
+      let subtotal = 0;
+      cart.forEach(({qty, product}, id)=>{
+        const line = document.createElement('div');
+        line.className='row';
+        const lineTotal = product.price * qty;
+        subtotal += lineTotal;
+        line.innerHTML = `
+          <div style="max-width:60%">
+            <div style="font-weight:800">${product.title}</div>
+            <div class="mini">${qty} x ${fmt(product.price)}</div>
+          </div>
+          <div>
+            <strong>${fmt(lineTotal)}</strong><br>
+            <button class="mini" style="background:none;border:none;color:#a7c07a;cursor:pointer" onclick="removeItem('${id}')">remover</button>
+          </div>`;
+        body.appendChild(line);
+      });
+      const discount = calcDiscount(subtotal);
+      document.getElementById('subtotal').textContent = fmt(subtotal);
+      document.getElementById('discount').textContent = '- ' + fmt(discount);
+      document.getElementById('total').textContent = fmt(Math.max(0, subtotal - discount));
+    }
+
+    function removeItem(id){ cart.delete(id); renderCart(); }
+
+    function calcDiscount(subtotal){
+      let d = 0;
+      if(couponApplied === 'BEMVINDO5') d += subtotal * 0.05;
+      return d;
+    }
+
+    function applyCoupon(){
+      const val = document.getElementById('coupon').value.trim().toUpperCase();
+      couponApplied = val || null; renderCart();
+    }
+
+    function openCart(){document.getElementById('drawer').classList.add('open');}
+    function closeCart(){document.getElementById('drawer').classList.remove('open');}
+
+    function checkoutWhatsApp(){
+      if(cart.size===0){openCart();return}
+      let text = `Olá! Quero finalizar minha compra:%0A`;
+      let subtotal = 0;
+      cart.forEach(({qty, product})=>{
+        text += `• ${product.title} (x${qty}) — ${fmt(product.price)}%0A`;
+        subtotal += product.price*qty;
+      });
+      const discount = calcDiscount(subtotal);
+      const total = Math.max(0, subtotal - discount);
+      text += `%0ASubtotal: ${fmt(subtotal)}%0ADesconto: ${fmt(discount)}%0ATotal: ${fmt(total)}%0A`;
+      text += `Forma de pagamento: Pix/Cartão`;
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+      window.open(url, '_blank');
+    }
+
+    function selectPlan(name){
+      const cfg = plans[name];
+      cart.clear();
+      for(let i=0;i<cfg.items && i<products.length;i++){
+        cart.set(products[i].id, { qty: 1, product: products[i] });
+      }
+      couponApplied = null;
+      openCart(); renderCart();
+    }
+
+    function renderPlanPrices(){
+      const sumN = (n)=> products.slice(0,n).reduce((s,p)=> s+p.price,0);
+      const val = (items, rate)=> Math.max(0, sumN(items) * (1 - rate));
+      document.getElementById('p-essencial').textContent = fmt(val(plans.Essencial.items, plans.Essencial.discountRate));
+      document.getElementById('p-profissional').textContent = fmt(val(plans.Profissional.items, plans.Profissional.discountRate));
+      document.getElementById('p-premium').textContent = fmt(val(plans.Premium.items, plans.Premium.discountRate));
+    }
+
+    function startCountdown(minutes=30){
+      const end = Date.now() + minutes*60*1000;
+      const el1 = document.getElementById('countdown');
+      const el2 = document.getElementById('timer');
+      const fmtTime = (ms)=>{
+        const s = Math.max(0, Math.floor(ms/1000));
+        const h = String(Math.floor(s/3600)).padStart(2,'0');
+        const m = String(Math.floor((s%3600)/60)).padStart(2,'0');
+        const ss = String(s%60).padStart(2,'0');
+        return `${h}:${m}:${ss}`;
+      }
+      const tick = ()=>{
+        const left = end - Date.now();
+        const txt = fmtTime(left);
+        if(el1) el1.textContent = txt;
+        if(el2) el2.textContent = txt;
+        if(left<=0) clearInterval(iv);
+      }
+      tick();
+      const iv = setInterval(tick, 1000);
+    }
+
+    function initWhatsApp(){
+      const wa = document.getElementById('waFloat');
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá!%20Quero%20falar%20sobre%20a%20Collection%20Premier.`;
+      wa.href = url;
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderProducts();
+    renderPlanPrices();
+    startCountdown(30);
+    initWhatsApp();
+  </script>
+</body>
+</html>
